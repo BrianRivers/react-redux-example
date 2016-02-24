@@ -11,7 +11,7 @@ export default class Main extends React.Component {
   // };
 
   onClick = () => {
-      console.log(this.props.value);
+      console.log(this);
   };
 
   render() {
