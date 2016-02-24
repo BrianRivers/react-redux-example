@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import  { Provider } from 'react-redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Main from './components/Main.js';
 
 // ** Create my Redux Store ** //
 import { createStore, combineReducers } from 'redux';
@@ -9,13 +12,13 @@ const reducer = (state, action) => {
 
       switch (action.type) {
         case 0:
-          return 'Initial';
+          return {value:'Initial'};
         case 1:
-          return 'Primus';
+          return {value:'Primus'};
         case 2:
-          return 'Secondus';
+          return {value:'Secondus'};
         default:
-          return 'Default';
+          return {value:'Default'};
       };
  }
 
@@ -28,21 +31,13 @@ store.dispatch({type: 2});
 
 console.log(store.getState());
 
-class Main extends React.Component {
-
-  render() {
-    console.log(this.props);
-    return (
-              <div>
-                <div>A test!</div>
-                <h1>Not a good test!</h1>
-              </div>
-            );
-  }
-
-};
+const App = () => (
+    <Main />
+  )
 
 ReactDOM.render(
-    <Provider store = {store}>   <Main />   </ Provider>,
+    <Provider store = {store}>
+      <App />
+    </ Provider>,
     document.getElementById('app')
   );
