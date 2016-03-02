@@ -34,6 +34,16 @@ constructor (props) {
 
   }
 
+  onClear = () => {
+    this.setState({
+      patientid:'',
+      firstname: '',
+      lastname: '',
+      state: '',
+      error: ''
+    })
+  }
+
   render() {
     return (
               <div>
@@ -43,6 +53,7 @@ constructor (props) {
                   <input className="col-md-3" name="firstname" value={this.state.firstname} placeholder="First Name" onChange = {this.onChange}/>
                   <input className="col-md-3" name="lastname" value={this.state.lastname} placeholder="Last Name" onChange = {this.onChange}/>
                   <input className="col-md-2" name="state" value={this.state.state} placeholder="State" onChange = {this.onChange}/>
+                  <button className="col-md-1" onClick={this.onClear}>Clear</button>
                 </div>
                 <br /><br />
                 <div className="col-md-12"><strong>{this.state.error}</strong></div>
