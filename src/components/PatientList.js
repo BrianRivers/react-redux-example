@@ -28,7 +28,6 @@ export default class PatientList extends React.Component {
 
   renderPatientList = () => {
     var rowkey = 0;
-    console.log(this.props.filteredlist);
     if(this.props.filteredlist.length > 0) {
       return this.props.filteredlist.map(patient =>
                       <PatientRow

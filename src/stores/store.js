@@ -10,12 +10,17 @@ import { createStore, combineReducers } from 'redux';
 const reducer = (state = {patients: data}, action) => {
 
       switch (action.type) {
+        case "ADD_ROW":
+        var test = {
+            patients:  [...state.patients, action.rowInfo]
+          };
+          return test;
+          break;
         default:
           return state;
       };
  }
 
-console.log(data);
 const store = createStore(reducer);
 
 export default store;

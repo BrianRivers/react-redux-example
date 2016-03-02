@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import FilterInput from './FilterInput.js';
 import PatientList from './PatientList.js';
 import Footer from './Footer.js';
+import AddRow from './AddRow.js';
+import addNewRow from '../actions/actions.js';
 import _ from 'lodash';
 
 export default class Main extends React.Component {
@@ -20,6 +22,14 @@ export default class Main extends React.Component {
     }
   };
 
+  componentWillReceiveProps = (nextProps) => {
+      if(nextProps.patients){
+        console.log(nextProps);
+        var regex = new RegExp('');
+        this.setState({filteredlist: this.filterPatientList(regex, nextProps.patients)});
+      }
+  }
+
   retrieveSelectedRow = (data) => {
     this.setState({
       showFooter:true,
@@ -31,7 +41,6 @@ export default class Main extends React.Component {
   }
 
   renderFooter = () => {
-    console.log('---- render footer ----');
      if(this.state.showFooter){
        return <Footer firstname = {this.state.name.firstname} lastname = {this.state.name.lastname} />
      }
@@ -42,15 +51,22 @@ export default class Main extends React.Component {
 
   onFilterList = (e) => {
     var regex = new RegExp(e.target.value, 'i');
-    var filteredList = _.filter(this.props.patients, function (patient) {
-         return patient.firstname.match(regex);
-    });
-
+    var filteredList = this.filterPatientList(regex, this.props.patients)
     this.setState({filteredlist: filteredList});
   }
 
+  filterPatientList = (regex, patients) => {
+    var filteredList = _.filter(patients, function (patient) {
+         return patient.firstname.match(regex);
+    });
+    return filteredList;
+  }
+
+  onAddRow = (newRow) => {
+    this.props.dispatch(addNewRow(newRow));
+  }
+
   render() {
-    console.log('---- main render ----');
     return (
               <div>
                 <h1>Marionette 101</h1>
@@ -61,6 +77,8 @@ export default class Main extends React.Component {
                   onSelected = {this.retrieveSelectedRow.bind(this)}
                   filteredlist = {this.state.filteredlist} />
                 <hr/>
+                <AddRow onAddRow = {this.onAddRow.bind(this)}/>
+                <br /><hr/>
                 { this.renderFooter() }
               </div>
             )
@@ -68,4 +86,9 @@ export default class Main extends React.Component {
 
 }
 
-export default connect(state => state)( Main);
+function mapStateToProps (state) {
+  console.log(state);
+  return state;
+}
+
+export default connect(mapStateToProps)( Main);
